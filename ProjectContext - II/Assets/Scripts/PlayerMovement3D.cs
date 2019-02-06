@@ -6,13 +6,13 @@ public class PlayerMovement3D : MonoBehaviour
 {
 
     private Rigidbody myRigidbody;
-    private float speed;
+    public float speed;
 
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody>();
-        speed = 5f;
+        //speed = 5f;
     }
 
     // Update is called once per frame
@@ -21,7 +21,7 @@ public class PlayerMovement3D : MonoBehaviour
         Movement();
     }
 
-
+    //Movement script DO NOT TOUCH
     void Movement() {
 
 

@@ -5,8 +5,7 @@ using UnityEngine;
 public class ShowScreen : MonoBehaviour
 {
     private Collider myCollider;
-    private bool allow;
-    private bool On;
+    public bool allow;
 
     public GameObject Screen;
     public GameObject Press;
@@ -17,20 +16,18 @@ public class ShowScreen : MonoBehaviour
     void Start()
     {
         myCollider = GetComponent<Collider>();
-        On = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        pros();
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == ("Player")) {
             Press.SetActive(true);
-            pros();
             allow = true;
         }
     }
@@ -38,20 +35,9 @@ public class ShowScreen : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == ("Player")) {
-            Screen.SetActive(false);
             Press.SetActive(false);
             allow = false;
         }
     }
 
-    void pros()
-    {
-        if (allow) {
-            if (Input.GetKey(KeyCode.E) && On == true) {
-                On = false;
-                Screen.SetActive(false);
-                Debug.Log("On");
-            }
-        }
-    }
 }

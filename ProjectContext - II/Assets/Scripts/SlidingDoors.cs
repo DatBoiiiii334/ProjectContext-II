@@ -21,6 +21,7 @@ public class SlidingDoors : MonoBehaviour
         
     }
 
+    //Triggers an animation for the door if you are in the area
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == ("Player")) {
