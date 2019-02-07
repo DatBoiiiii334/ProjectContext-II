@@ -7,6 +7,7 @@ TagManager:
   - Meat
   - Wheat
   - Panel
+  - Water
   layers:
   - Default
   - TransparentFX

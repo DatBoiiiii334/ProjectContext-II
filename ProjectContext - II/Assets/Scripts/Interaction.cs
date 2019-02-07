@@ -7,11 +7,13 @@ public class Interaction : MonoBehaviour
     public GameObject MeatScreen;
     public GameObject WheatScreen;
     public GameObject PanelScreen;
+    public GameObject WaterScreen;
     public GameObject Interactable;
 
     private bool meatOn;
     private bool wheatOn;
     private bool panelOn;
+    private bool waterOn;
 
     //Checks if you are in a panel
     private void OnTriggerEnter(Collider other)
@@ -29,6 +31,11 @@ public class Interaction : MonoBehaviour
         if (other.tag == ("Panel")) {
             Interactable.SetActive(true);
             panelOn = true;
+        }
+
+        if(other.tag == ("Water")) {
+            Interactable.SetActive(true);
+            waterOn = true;
         }
     }
 
@@ -52,6 +59,12 @@ public class Interaction : MonoBehaviour
             PanelScreen.SetActive(false);
             panelOn = false;
         }
+
+        if (other.tag == ("Water")) {
+            Interactable.SetActive(false);
+            WaterScreen.SetActive(false);
+            waterOn = false;
+        }
     }
 
     //Lets you open the screen of each resource menu
@@ -72,6 +85,12 @@ public class Interaction : MonoBehaviour
         if (panelOn) {
             if (Input.GetKey(KeyCode.E)) {
                 PanelScreen.SetActive(true);
+            }
+        }
+
+        if (waterOn) {
+            if (Input.GetKey(KeyCode.E)) {
+                WaterScreen.SetActive(true);
             }
         }
     }
