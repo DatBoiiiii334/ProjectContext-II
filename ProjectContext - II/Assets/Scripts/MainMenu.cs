@@ -17,4 +17,10 @@ public class MainMenu : MonoBehaviour
         Debug.Log("game quit");
         Application.Quit();
     }
+
+    public void Retry()
+    {
+        //Loads the next scene in the scene manager
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
 }

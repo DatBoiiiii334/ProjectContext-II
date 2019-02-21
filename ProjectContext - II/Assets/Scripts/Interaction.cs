@@ -4,95 +4,52 @@ using UnityEngine;
 
 public class Interaction : MonoBehaviour
 {
-    public GameObject MeatScreen;
-    public GameObject WheatScreen;
-    public GameObject PanelScreen;
-    public GameObject WaterScreen;
-    public GameObject Interactable;
+    private bool On;
+    private bool myButton;
 
-    private bool meatOn;
-    private bool wheatOn;
-    private bool panelOn;
-    private bool waterOn;
+    //Place the displays you wish to view when tapping E
+    public GameObject MyDisplay;
+    public GameObject InteractDisplay;
 
-    //Checks if you are in a panel
-    private void OnTriggerEnter(Collider other)
+    void Start()
     {
-        if(other.tag == ("Meat")) {
-            Interactable.SetActive(true);
-            meatOn = true;
-        }
+        
+    }
 
-        if (other.tag == ("Wheat")) {
-            Interactable.SetActive(true);
-            wheatOn = true;
+    private void Update()
+    {
+        if (On) {   //Checks if you are in the trigger of the gameobject
+            if (myButton == false) {   //Checks if your havent pressed the action button yet, if you havent then it will open your display
+                if (Input.GetKeyDown(KeyCode.E)) {
+                    MyDisplay.SetActive(true);
+                    myButton = true;
+                }
+            }else if (myButton == true) {   //If you press the action button again it will close the display because it knows its already been opent
+                if (Input.GetKeyDown(KeyCode.E)) {
+                    MyDisplay.SetActive(false);
+                    myButton = false;
+                }
+            }
         }
+        else { return; }
+    }
 
-        if (other.tag == ("Panel")) {
-            Interactable.SetActive(true);
-            panelOn = true;
-        }
-
-        if(other.tag == ("Water")) {
-            Interactable.SetActive(true);
-            waterOn = true;
+    //Checks if you are in the triggerbox of a panel
+    void OnTriggerEnter(Collider other)
+    {
+        InteractDisplay.SetActive(true);
+        if (other.tag == ("Player")) {
+            On = true;  //If you are in the triggerbox then you are allowed to interact with the action button
+            
         }
     }
 
     //Check if you have exited a panel
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == ("Meat")) {
-            Interactable.SetActive(false);
-            MeatScreen.SetActive(false);
-            meatOn = false;
-        }
-
-        if (other.tag == ("Wheat")) {
-            Interactable.SetActive(false);
-            WheatScreen.SetActive(false);
-            wheatOn = false;
-        }
-
-        if (other.tag == ("Panel")) {
-            Interactable.SetActive(false);
-            PanelScreen.SetActive(false);
-            panelOn = false;
-        }
-
-        if (other.tag == ("Water")) {
-            Interactable.SetActive(false);
-            WaterScreen.SetActive(false);
-            waterOn = false;
-        }
+        InteractDisplay.SetActive(false);
+        On = false;     //If you leave the triggerbox you are no longer allowed to interact with the action button and it will close all windows automatically
+        MyDisplay.SetActive(false);
+        myButton = false;
     }
-
-    //Lets you open the screen of each resource menu
-    private void Update()
-    {
-        if (meatOn) {
-            if (Input.GetKey(KeyCode.E)) {
-                MeatScreen.SetActive(true);
-            }
-        }
-
-        if (wheatOn) {
-            if (Input.GetKey(KeyCode.E)) {
-                WheatScreen.SetActive(true);
-            }
-        }
-
-        if (panelOn) {
-            if (Input.GetKey(KeyCode.E)) {
-                PanelScreen.SetActive(true);
-            }
-        }
-
-        if (waterOn) {
-            if (Input.GetKey(KeyCode.E)) {
-                WaterScreen.SetActive(true);
-            }
-        }
-    }
-
 }

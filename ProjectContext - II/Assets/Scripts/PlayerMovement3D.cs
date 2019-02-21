@@ -19,29 +19,44 @@ public class PlayerMovement3D : MonoBehaviour
     void Update()
     {
         Movement();
+     
     }
 
     //Movement script DO NOT TOUCH
     void Movement() {
 
 
-        if (Input.GetKey(KeyCode.A)) {
-            myRigidbody.velocity = new Vector3(0, 0, -speed);
-        }
-
-
-        if (Input.GetKey(KeyCode.D)) {
-            myRigidbody.velocity = new Vector3(0, 0, speed);
-        }
-
-
-        if (Input.GetKey(KeyCode.W)) {
+        if (Input.GetKey(KeyCode.A)) {  //Left
             myRigidbody.velocity = new Vector3(-speed, 0, 0);
         }
 
-        if (Input.GetKey(KeyCode.S)) {
+        if (Input.GetKey(KeyCode.D)) {  //Right
             myRigidbody.velocity = new Vector3(speed, 0, 0);
         }
+
+
+        if (Input.GetKey(KeyCode.W)) {  //Up
+            myRigidbody.velocity = new Vector3(0, 0, speed);
+        }
+
+        if (Input.GetKey(KeyCode.S)) {  //Down
+            myRigidbody.velocity = new Vector3(0, 0, -speed);
+        }
+    }
+    //Portal script 
+    private void OnTriggerEnter(Collider collision)
+    {
+        //Going trouh Right portal 
+        if (collision.gameObject.tag == "Portal1") {
+            transform.position = new Vector3(0.9f, 18.4f, 10.16f);
+        }
+
+        //Going trouh Left portal 2
+        if (collision.gameObject.tag == "Portal2") {
+            transform.position = new Vector3(0.81f, 0.63f, 7f);
+        }
+
+
     }
 
 }

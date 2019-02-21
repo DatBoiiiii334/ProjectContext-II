@@ -5,8 +5,29 @@ using UnityEngine.UI;
 
 public class Manager : MonoBehaviour
 {
-    private int Amount_Months = 1;
+    
+    private int Amount_Months = 1; //You start with 1 month/year automaticaly
 
+    private float Energy_From_Cows;
+    private float Energy_From_Crops;
+    private float Co_From_Cows;
+    private float Co_From_Crops;
+    private float Happyness_From_Cows;
+    private float Happyness_From_Crops;
+
+    private float TotalEnergyGained;
+    private float TotalCoGained;
+    private float TotalHappynessGained;
+
+    private bool lostGame;
+
+    private bool FirstEvent_OptionOne;
+    private bool FirstEvent_OptionTwo;
+
+    private bool ButtonDisplayMonthly;
+
+
+    public Slider coDisplay;
     //Your total amount of resources
     public float cows;
     public float crops;
@@ -14,7 +35,7 @@ public class Manager : MonoBehaviour
     public float happy;
     public float water;
 
-    public float co;
+    public float Co;
     public float TotalCo;
 
     //The amount of energy each resource would cost
@@ -25,32 +46,13 @@ public class Manager : MonoBehaviour
     public float Water_Cost_Crops;
     public float Cost_Water;
     public float Energy_Cost_Water; // The cost of energy is in water
-
-    private float Energy_From_Cows;
-    private float Energy_From_Crops;
-    private float CO_From_Cows;
-    private float CO_From_Crops;
-    private float Happyness_From_Cows;
-    private float Happyness_From_Crops;
-
     public float Energy_Per_Cow;
     public float Energy_Per_Crop;
+
     public float CO_Per_Cows;
     public float Happyness_Per_Cows;
     public float Happyness_Per_Crops;
     public float CO_Per_Crops;
-
-    private float TotalEnergyGained;
-    private float TotalCoGained;
-    private float TotalHappynessGained;
-
-    private bool lostGame;
-
-    private bool CanBuy;
-    private bool CanBuy2;
-
-    private bool FirstEvent_OptionOne;
-    private bool FirstEvent_OptionTwo;
 
     //The amount each resource costs
     public float Amount_Purchased_Cows;
@@ -63,8 +65,6 @@ public class Manager : MonoBehaviour
 
     //How much water you consume depending on the amount 
     public float Water_Consumption;
-
-    
 
     //Displays the numbers on the screen
     public Text Total_Cows;
@@ -81,7 +81,7 @@ public class Manager : MonoBehaviour
 
     //Displays 
     public Text Display_Total_Energy;
-    public Text Display_Total_Water;
+    public Text Display_Total_CO;
     public Text Display_Gained_Energy;
 
     public Text Display_Days;
@@ -95,63 +95,77 @@ public class Manager : MonoBehaviour
     public Text Event1Text;
 
     //Everrything gained from resources
-    public Text DisplayMonthlyResources;
-    //public Text DisplayMonthlyEnergyGainedCows;
-    //public Text DisplayMonthlyEnergyGainedCrops;
-    //public Text DisplayMonthlyCoGainedCows;
-    //public Text DisplayMonthlyCoGainedCrops;
-    //public Text DisplayMonthlyHappynessGainedCows;
-    //public Text DisplayMonthlyHappynessGainedCrops;
+    //public Text DisplayMonthlyResources;
+    public GameObject DisplayMonthly;
 
+    public Text DisplayTotals;
+    public Text DisplayMonthlyEnergyGainedCows;
+    public Text DisplayMonthlyEnergyGainedCrops;
+    public Text DisplayMonthlyCoGainedCows;
+    public Text DisplayMonthlyCoGainedCrops;
+    public Text DisplayMonthlyHappynessGainedCows;
+    public Text DisplayMonthlyHappynessGainedCrops;
 
     private void Start()
     {
-        //cows = 70;
-        //crops = 70;
-        //energy = 70;
-        //happy = 70;
-
-        //Cost_Cows = 30;
-        //Cost_Crops = 20;
-
-        //Amount_Purchased_Cows = 1;
-        //Amount_Purchased_Crops = 2;
+        coDisplay.minValue = 0;
+        coDisplay.maxValue = 300;
+        coDisplay.wholeNumbers = true;
+        coDisplay.value = 0;
 
     }
 
     private void Update()
     {
+        //coDisplay = Mathf.Lerp(lowColor, fullColor, number);
+
         //Displays the title and the amount
         Total_Cows.text = "Cows: " + cows.ToString();
         Total_Crops.text = "Crops: " + crops.ToString();
         Total_Energy.text = "Energy: " + energy.ToString();
         Total_Happy.text = "Happy: " + happy.ToString();
         Total_Water.text = "Water: " + water.ToString();
-        Total_CO.text = "Co2: " + TotalCoGained.ToString();
+        Total_CO.text = "Co2: " + Co.ToString();
+
+        DisplayMonthlyEnergyGainedCows.text = "Energy gained from cows = " + Energy_From_Cows;
+        DisplayMonthlyEnergyGainedCrops.text = "Energy gained from crops = " + Energy_From_Crops;
+        DisplayMonthlyCoGainedCows.text = "Co2 gained from cows = " + Co_From_Cows;
+        DisplayMonthlyCoGainedCrops.text = "Co2 negated by crops = " + Co_From_Crops;
+        DisplayMonthlyHappynessGainedCows.text = "Happynes gained from cows = " + Happyness_From_Cows;
+        DisplayMonthlyHappynessGainedCrops.text = "Happynes gained from crops = "+ Happyness_From_Crops;
+        DisplayTotals.text = "Total Co2 gained: " + TotalCo;
 
         //displays the buy text, depending on this I can change the amount and value of each cow
         Display_Info_Cows.text = "Buy " + Amount_Purchased_Cows + " cows for " + Energy_Cost_Cow + " energy and " + Water_Cost_Cow + " water";
-        Display_Info_Crops.text = "Buy " + Amount_Purchased_Crops + " crops for " + Energy_Cost_Crops + " energy and " + Water_Cost_Crops + "water";
+        Display_Info_Crops.text = "Buy " + Amount_Purchased_Crops + " crops for " + Energy_Cost_Crops + " energy and " + Water_Cost_Crops + " water";
         Display_Info_Water.text = "Buy " + Amount_Purchased_Water + " water for "+ Energy_Cost_Water + " energy";
 
-        DisplayMonthlyResources.text =" Energy gained from cows " + Energy_From_Cows + 
-            " Energy gained from crops " + Energy_Cost_Crops + 
-            " Co2 gained from cows: " + CO_From_Cows + "Co2 negated by crops: " + 
-            CO_From_Crops + " Happyness gained from cows: " + 
-            Happyness_From_Cows + " Happyness gained from crops: " + Happyness_From_Crops;
 
         Display_Total_Energy.text = "Total energy gained: " + TotalEnergyGained;
-        Display_Total_Water.text = "Total co2 gained: " + TotalCoGained;
+        //Display_Total_CO.text = "Total co2 gained: " + TotalCoGained;
         Display_Gained_Energy.text = "Total Happyness gained: " + TotalHappynessGained;
-        Display_Days.text = "Month " + Amount_Months;
+        Display_Days.text = "year: " + Amount_Months;
 
-
-
-        checkem(energy,water);
-        checkAgain(water);
-        CalculateCo(co, cows, crops);
+        coDisplay.value = Co;
+        CalculateCo(Co, cows, crops);
         CalculateTotals();
-        EventManager();
+        /*WinLoseCondition();*/ //Detects when he player won or lost
+        //EventManager();
+
+
+
+        if (ButtonDisplayMonthly == false) {
+            if (Input.GetKeyDown(KeyCode.V)) {
+                DisplayMonthly.SetActive(true);
+                ButtonDisplayMonthly = true;
+            }
+        }else if(ButtonDisplayMonthly == true) {
+            if (Input.GetKeyDown(KeyCode.V)) {
+                DisplayMonthly.SetActive(false);
+                ButtonDisplayMonthly = false;
+            }
+        }
+        
     
      }
 
@@ -191,27 +205,37 @@ public class Manager : MonoBehaviour
     //The calculations that are done when you press buy
     public void BuyCows()
     {
-        if(CanBuy) {
-            cows = cows + Amount_Purchased_Cows;
-            energy = energy - Energy_Cost_Cow;
-            water = water - Water_Cost_Cow;
-        }
+        //Checks if you have enough energy and water to make a purchase
+        if (water - Water_Cost_Cow >= 0) {
+            if (energy - Energy_Cost_Cow >= 0) {
+
+                cows = cows + Amount_Purchased_Cows;
+                energy = energy - Energy_Cost_Cow;
+                water = water - Water_Cost_Cow;
+            } else { return; }
+        } else { return; }
     }
 
     public void BuyCrops()
     {
-        if(CanBuy) {
-            crops = crops + Amount_Purchased_Crops;
-            energy = energy - Energy_Cost_Crops;
-            water = water - Water_Cost_Crops;
-        }
+        if (water - Water_Cost_Crops >= 0) {
+            if(energy - Energy_Cost_Crops >= 0) {
+
+                crops = crops + Amount_Purchased_Crops;
+                energy = energy - Energy_Cost_Crops;
+                water = water - Water_Cost_Crops;
+            } else { return; }
+        } else { return; }
     }
 
     public void BuyWater()
     {
-        if (CanBuy2) {
+        if (energy - Energy_Cost_Water >= 0) {
             energy = energy - Energy_Cost_Water;
             water = water + Amount_Purchased_Water;
+        }
+        else {
+            return;
         }
     }
 
@@ -219,7 +243,12 @@ public class Manager : MonoBehaviour
     {
         //SchipPanel.SetActive(true);
         Amount_Months = Amount_Months + 1;
-        FirstEvent.SetActive(true);
+        //WinLoseCondition();
+
+        energy = energy + TotalEnergyGained;
+        Co = Co + TotalCoGained;
+
+        happy = happy + TotalHappynessGained;
         //ConsumeWater(cows, crops);
     }
 
@@ -228,22 +257,27 @@ public class Manager : MonoBehaviour
         Energy_From_Cows = cows * Energy_Per_Cow;
         Energy_From_Crops = crops * Energy_Per_Crop;
         
-        CO_From_Cows = cows * CO_Per_Cows;
-        CO_From_Crops = crops * CO_Per_Crops;
+        Co_From_Cows = cows * CO_Per_Cows;
+        Co_From_Crops = crops * CO_Per_Crops;
         
         Happyness_From_Cows = cows * Happyness_Per_Cows;
         Happyness_From_Crops = crops * Happyness_Per_Crops;
 
         TotalEnergyGained = Energy_From_Cows + Energy_From_Crops;
-        TotalCoGained = CO_From_Cows + CO_From_Crops;
+        TotalCoGained = Co_From_Cows + Co_From_Crops;
         TotalHappynessGained = Happyness_From_Cows + Happyness_From_Crops;
     }
 
     public void Next()
     {
         SchipPanel.SetActive(false);
-        energy = energy + Energy_Gained;
-        WinLoseCondition();
+        
+        //WinLoseCondition();
+    }
+
+    public void CloseEvent()
+    {
+        FirstEvent.SetActive(false);
     }
 
     public void CalculateCo(float myCO, float myCows, float myCrops)
@@ -255,38 +289,20 @@ public class Manager : MonoBehaviour
 
     public void WinLoseCondition()
     {
-        if(water <= 0 || energy <= 0 || happy <= 0 || TotalCoGained >=200) {
+        if(water < 0 || happy < 0 || TotalCoGained >= 300) {
             lostGame = true;
             LoseScreen.SetActive(true);
         }
+        else {
+            //FirstEvent.SetActive(true);
+            return;
+        }
 
-        if (Amount_Months >= 3) {
+        if (Amount_Months >= 10) {
             WinScreen.SetActive(true);
         }
     }
 
-
-
-    //Checks if you have enough energy to make a purchase
-    public void checkem(float myenergy, float mywater)
-    {
-        if(myenergy - Energy_Cost_Cow >= 0 || myenergy - Energy_Cost_Crops >= 0 && mywater - Water_Cost_Cow >= 0 || mywater - Water_Cost_Crops >= 0) {
-            CanBuy = true;
-        }
-        else {
-            CanBuy = false; 
-        }
-    }
-
-    public void checkAgain(float mywater)
-    {
-        if(mywater - Energy_Cost_Water >= 0) {
-            CanBuy2 = true;
-        }
-        else {
-            CanBuy2 = false;
-        }
-    }
 
     public void ConsumeWater(float myCows, float myCrops)
     {

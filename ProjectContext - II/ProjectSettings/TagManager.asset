@@ -8,6 +8,8 @@ TagManager:
   - Wheat
   - Panel
   - Water
+  - Portal1
+  - Portal2
   layers:
   - Default
   - TransparentFX
