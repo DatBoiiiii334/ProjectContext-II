@@ -26,27 +26,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.84584993
-  m_Height: 0.41032845
-  m_Direction: 1
+  m_Radius: 0.3
+  m_Height: 1.67
+  m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &113981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8820558993136430687}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2977130e67cac0469e8b9a540e9e804, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MeatScreen: {fileID: 0}
-  WheatScreen: {fileID: 0}
-  PanelScreen: {fileID: 0}
-  WaterScreen: {fileID: 0}
-  Interactable: {fileID: 0}
 --- !u!114 &113982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,7 +42,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9d042aa6f3c13a4abc1e376ca34f80d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 8
 --- !u!1001 &8820558993136527615
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -69,7 +52,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: 01786518858fcec4fa91b74aede0051d, type: 3}
       propertyPath: m_Name
-      value: ThePlayer
+      value: ThePlayer Variant
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 01786518858fcec4fa91b74aede0051d, type: 3}
       propertyPath: m_TagString

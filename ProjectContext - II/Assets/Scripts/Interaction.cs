@@ -9,18 +9,15 @@ public class Interaction : MonoBehaviour
 
     //Place the displays you wish to view when tapping E
     public GameObject MyDisplay;
-    public GameObject InteractDisplay;
-
-    void Start()
-    {
-        
-    }
+    public GameObject InteractButton;
+    
 
     private void Update()
     {
         if (On) {   //Checks if you are in the trigger of the gameobject
             if (myButton == false) {   //Checks if your havent pressed the action button yet, if you havent then it will open your display
                 if (Input.GetKeyDown(KeyCode.E)) {
+
                     MyDisplay.SetActive(true);
                     myButton = true;
                 }
@@ -37,7 +34,7 @@ public class Interaction : MonoBehaviour
     //Checks if you are in the triggerbox of a panel
     void OnTriggerEnter(Collider other)
     {
-        InteractDisplay.SetActive(true);
+        InteractButton.SetActive(true);
         if (other.tag == ("Player")) {
             On = true;  //If you are in the triggerbox then you are allowed to interact with the action button
             
@@ -47,7 +44,7 @@ public class Interaction : MonoBehaviour
     //Check if you have exited a panel
     private void OnTriggerExit(Collider other)
     {
-        InteractDisplay.SetActive(false);
+        InteractButton.SetActive(false);
         On = false;     //If you leave the triggerbox you are no longer allowed to interact with the action button and it will close all windows automatically
         MyDisplay.SetActive(false);
         myButton = false;

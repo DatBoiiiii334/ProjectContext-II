@@ -10,29 +10,56 @@ public class CameraController : MonoBehaviour {
 	public float movespeed;
     public float ZoomSpeed;
 
+    public bool On;
+
+
+    public float zoomSensitivity = 15.0f;
+    public float zoomSpeed = 5.0f;
+    public float zoomMin = 5.0f;
+    public float zoomMax = 80.0f;
+
+    private float zoom;
+
+    private void Start()
+    {
+        zoom = GetComponent<Camera>().fieldOfView;
+    }
 
     // Update is called once per frame
     void Update () {
+        //Camera smooth follow code
 		TargetPos = new Vector3 (Player.transform.position.x , Player.transform.position.y + 10, Player.transform.position.z -10f);
 		transform.position = Vector3.Lerp (transform.position,TargetPos,movespeed * Time.deltaTime);
 
-
+        //Camera Zoomin
         ZoomIn();   //Do this function
+
+        zoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSensitivity;
+        zoom = Mathf.Clamp(zoom, zoomMin, zoomMax);
+
+    }
+
+    void LateUpdate()
+    {
+        GetComponent<Camera>().fieldOfView = Mathf.Lerp(GetComponent<Camera>().fieldOfView, zoom, Time.deltaTime * zoomSpeed);
     }
 
     void ZoomIn()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0) {
-            GetComponent<Camera>().fieldOfView = 30f;
-            
+
+
+        if (Input.GetAxis("Mouse ScrollWheel") > 0) {   //  30f
+            //    GetComponent<Camera>().fieldOfView = ZoomSpeed;
+
             //GetComponent<Transform>().position = new Vector3(transform.position.x + 2f,transform.position.y - ZoomSpeed, transform.position.z);
         }
-        if (Input.GetAxis("Mouse ScrollWheel") < 0) {
-            GetComponent<Camera>().fieldOfView = 60f;
+        if (Input.GetAxis("Mouse ScrollWheel") < 0) {   //  60f
+            //GetComponent<Camera>().fieldOfView = ZoomSpeed ;
+            
             //GetComponent<Transform>().position = new Vector3(transform.position.x - 2f, transform.position.y + ZoomSpeed, transform.position.z);
         }
-        if (Input.GetAxis("Mouse ScrollWheel") > 0.9) {
-            GetComponent<Camera>().fieldOfView = 90f;
-        }
+        //if (Input.GetAxis("Mouse ScrollWheel") < 0 && On == true) {     //  90f
+        //    GetComponent<Camera>().fieldOfView = ZoomSpeed;
+        //}
     }
 }

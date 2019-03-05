@@ -28,12 +28,14 @@ public class Manager : MonoBehaviour
 
 
     public Slider coDisplay;
+    public Slider happyDisplay;
     //Your total amount of resources
     public float cows;
     public float crops;
     public float energy;
     public float happy;
     public float water;
+    public float populace;
 
     public float Co;
     public float TotalCo;
@@ -113,6 +115,11 @@ public class Manager : MonoBehaviour
         coDisplay.wholeNumbers = true;
         coDisplay.value = 0;
 
+        happyDisplay.minValue = 0;
+        happyDisplay.maxValue = 300;
+        happyDisplay.wholeNumbers = true;
+        happyDisplay.value = 0;
+
     }
 
     private void Update()
@@ -147,6 +154,7 @@ public class Manager : MonoBehaviour
         Display_Days.text = "year: " + Amount_Months;
 
         coDisplay.value = Co;
+        happyDisplay.value = happy;
         CalculateCo(Co, cows, crops);
         CalculateTotals();
         /*WinLoseCondition();*/ //Detects when he player won or lost

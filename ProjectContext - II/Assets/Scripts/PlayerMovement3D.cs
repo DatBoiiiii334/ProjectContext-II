@@ -18,31 +18,41 @@ public class PlayerMovement3D : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
+        
+    }
+    private void FixedUpdate()
+    {
         Movement();
-     
     }
 
     //Movement script DO NOT TOUCH
     void Movement() {
 
+        Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        //myRigidbody.transform.position += Movement * speed * Time.deltaTime;
+        myRigidbody.MovePosition(transform.position += movement * speed * Time.deltaTime);
 
-        if (Input.GetKey(KeyCode.A)) {  //Left
-            myRigidbody.velocity = new Vector3(-speed, 0, 0);
-        }
+        //if (Input.GetKey(KeyCode.A)) {  //Left
+        //    myRigidbody.velocity = new Vector3(-speed, 0, 0);
+        //}
 
-        if (Input.GetKey(KeyCode.D)) {  //Right
-            myRigidbody.velocity = new Vector3(speed, 0, 0);
-        }
+        //if (Input.GetKey(KeyCode.D)) {  //Right
+        //    myRigidbody.velocity = new Vector3(speed, 0, 0);
+        //}
 
 
-        if (Input.GetKey(KeyCode.W)) {  //Up
-            myRigidbody.velocity = new Vector3(0, 0, speed);
-        }
+        //if (Input.GetKey(KeyCode.W)) {  //Up
+        //    myRigidbody.velocity = new Vector3(0, 0, speed);
+        //}
 
-        if (Input.GetKey(KeyCode.S)) {  //Down
-            myRigidbody.velocity = new Vector3(0, 0, -speed);
-        }
+        //if (Input.GetKey(KeyCode.S)) {  //Down
+        //    myRigidbody.velocity = new Vector3(0, 0, -speed);
+        //}
     }
+
+
     //Portal script 
     private void OnTriggerEnter(Collider collision)
     {
