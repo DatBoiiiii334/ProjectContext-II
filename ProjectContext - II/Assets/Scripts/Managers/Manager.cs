@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Manager : MonoBehaviour
 {
-    
+
     private int Amount_Months = 1; //You start with 1 month/year automaticaly
 
     private float Energy_From_Cows;
@@ -25,6 +25,7 @@ public class Manager : MonoBehaviour
     private bool FirstEvent_OptionTwo;
 
     private bool ButtonDisplayMonthly;
+    private bool Warning;
 
 
     public Slider coDisplay;
@@ -92,6 +93,7 @@ public class Manager : MonoBehaviour
     public GameObject LoseScreen;
     public GameObject WinScreen;
     public GameObject FirstEvent;
+    public GameObject WarningSign;
 
     public Text Event1Intro;
     public Text Event1Text;
@@ -107,6 +109,8 @@ public class Manager : MonoBehaviour
     public Text DisplayMonthlyCoGainedCrops;
     public Text DisplayMonthlyHappynessGainedCows;
     public Text DisplayMonthlyHappynessGainedCrops;
+    
+    
 
     private void Start()
     {
@@ -125,6 +129,8 @@ public class Manager : MonoBehaviour
     private void Update()
     {
         //coDisplay = Mathf.Lerp(lowColor, fullColor, number);
+
+        WarningScreen();
 
         //Displays the title and the amount
         Total_Cows.text = "Cows: " + cows.ToString();
@@ -156,7 +162,7 @@ public class Manager : MonoBehaviour
         coDisplay.value = Co;
         happyDisplay.value = happy;
         CalculateCo(Co, cows, crops);
-        CalculateTotals();
+        CalculateTotals(energy);
         /*WinLoseCondition();*/ //Detects when he player won or lost
         //EventManager();
 
@@ -173,8 +179,6 @@ public class Manager : MonoBehaviour
                 ButtonDisplayMonthly = false;
             }
         }
-        
-    
      }
 
     public void EventManager()
@@ -260,7 +264,19 @@ public class Manager : MonoBehaviour
         //ConsumeWater(cows, crops);
     }
 
-    public void CalculateTotals()
+    public void WarningScreen()
+    {
+        
+        if (energy <= 50f && Warning == false) {
+            WarningSign.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.E)) {
+                WarningSign.SetActive(false);
+                Warning = true;
+            }
+        }
+    }
+
+    public void CalculateTotals(float energy)
     {
         Energy_From_Cows = cows * Energy_Per_Cow;
         Energy_From_Crops = crops * Energy_Per_Crop;
@@ -319,5 +335,8 @@ public class Manager : MonoBehaviour
         Energy_Gained = Energy_Gained + myCrops + myCows;
     }
 
-
+    public void PlantA_Cost(float _energy)
+    {
+        energy = energy - _energy;
+    }
 }

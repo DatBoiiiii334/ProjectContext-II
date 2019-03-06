@@ -35,6 +35,15 @@ public class PlantManager : MonoBehaviour
     private bool ButtonC;
     private bool ButtonD;
 
+    public Manager _Manager;
+    private float jigga =100;
+
+
+    public void Start()
+    {
+        _Manager = gameObject.GetComponent<Manager>();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -48,16 +57,26 @@ public class PlantManager : MonoBehaviour
     {
         if (ButtonA) {
             Plant_A_Amount = Plant_A_Amount + 1;
+            //_Manager.PlantA_Cost(jigga);
+            _Manager.energy = _Manager.energy - 10f;
+            _Manager.energy = _Manager.water - 10f;
+
         }
         if (ButtonB) {
             Plant_B_Amount = Plant_B_Amount + 1;
+            _Manager.energy = _Manager.energy - 20f;
+            _Manager.energy = _Manager.water - 20f;
         }
         if (ButtonC) {
             Plant_C_Amount = Plant_C_Amount + 1;
+            _Manager.energy = _Manager.energy - 30f;
+            _Manager.energy = _Manager.water - 30f;
         }
 
         if (ButtonD) {
             Plant_D_Amount = Plant_D_Amount + 1;
+            _Manager.energy = _Manager.energy - 40f;
+            _Manager.energy = _Manager.water - 40f;
         }
     }
 
